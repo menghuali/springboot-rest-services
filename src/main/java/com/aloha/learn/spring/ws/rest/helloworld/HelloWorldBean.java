@@ -1,4 +1,4 @@
-package com.aloha.learn.spring.ws.rest.controller;
+package com.aloha.learn.spring.ws.rest.helloworld;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
