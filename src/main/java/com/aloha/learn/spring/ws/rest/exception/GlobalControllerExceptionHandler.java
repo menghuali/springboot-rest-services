@@ -7,11 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import com.aloha.learn.spring.ws.rest.user.UserNotFoundException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Sample of global exception handling
+ */
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
@@ -22,10 +26,18 @@ public class GlobalControllerExceptionHandler {
         return new ExceptionResponse(new Date(), exception.getMessage(), request.getRequestURI());
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    ExceptionResponse handleMethodArgumentNotValidException(HttpServletRequest request, Exception exception) {
+        return new ExceptionResponse(new Date(), exception.getMessage(), request.getRequestURI());
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     @ResponseBody
     ExceptionResponse handleInternalException(HttpServletRequest request, Exception exception) {
+        exception.printStackTrace();
         return new ExceptionResponse(new Date(), exception.getMessage(), request.getRequestURI());
     }
 
